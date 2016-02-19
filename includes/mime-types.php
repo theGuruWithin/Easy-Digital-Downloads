@@ -2,28 +2,36 @@
 /**
  * Mime Types
  *
- * @package     Easy Digital Downloads
- * @subpackage  Mime Types
- * @copyright   Copyright (c) 2012, Pippin Williamson
+ * @package     EDD
+ * @subpackage  Functions
+ * @copyright   Copyright (c) 2015, Pippin Williamson
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since       1.0 
-*/
+ * @since       1.0
+ */
 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
  * Allowed Mime Types
  *
- * @access      public
- * @since       1.0 
- * @return      array
-*/
-
-function edd_allowed_mime_types( $existing_mimes ) {
- 
-	$existing_mimes['zip'] = 'application/zip';
+ * @since 1.0
+ *
+ * @param array $existing_mimes A list of all the existing MIME types
+ * @return array A list of all the new MIME types appended
+ */
+function edd_allowed_mime_types( $existing_mimes = array() ) {
+	$existing_mimes['zip']  = 'application/zip';
 	$existing_mimes['epub'] = 'application/epub+zip';
 	$existing_mimes['mobi'] = 'application/x-mobipocket-ebook';
- 	return $existing_mimes;
- 
+	$existing_mimes['m4r']  = 'audio/aac';
+	$existing_mimes['aif']  = 'audio/x-aiff';
+	$existing_mimes['aiff'] = 'audio/aiff';
+	$existing_mimes['psd']  = 'image/photoshop';
+	$existing_mimes['exe']  = 'application/octet-stream';
+	$existing_mimes['apk']  = 'application/vnd.android.package-archive';
+	$existing_mimes['msi']  = 'application/x-ole-storage';
+
+	return $existing_mimes;
 }
-add_filter('upload_mimes', 'edd_allowed_mime_types');
+add_filter( 'upload_mimes', 'edd_allowed_mime_types' );

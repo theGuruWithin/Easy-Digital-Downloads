@@ -9,7 +9,7 @@
  *
  * For the full copyright and license information, please view the LICENSE file.
  */
- 
+
 /**
  * A data serie.
  *
@@ -34,7 +34,7 @@ class GoogleChartData
 	protected $labels = null;
 
 	/**
-	 * Indicate if the color has been overriden.
+	 * Indicate if the color has been overridden.
 	 * This variable is used to minimize the request. If no custom color has
 	 * been providen, then the @c cho parameter is not triggered.
 	 */
@@ -54,12 +54,12 @@ class GoogleChartData
 	 * Thickness of the line. Line Chart only. (@c chls)
 	 */
 	protected $thickness = 2;
-	
+
 	/**
 	 * Length of the dash. Line Chart only. (@c chls)
 	 */
 	protected $dash_length = null;
-	
+
 	/**
 	 * Length of the spaces between dashes. Line Chart only. (@c chls)
 	 */
@@ -69,18 +69,18 @@ class GoogleChartData
 	 *  Line fill values (to fill area below a line). (@c chm)
 	 */
 	protected $fill = null;
-	
+
 	protected $fill_slices = array();
 
 	/**
-	 *  bool Wether to calculate scale automatically or not.
+	 *  bool Whether to calculate scale automatically or not.
 	 */
 	protected $autoscale = true;
 	/**
 	 *  array The scale, as specified by the user with setScale
 	 */
 	protected $scale = null;
-	
+
 	/**
 	 *  int Holds the index of the data serie in the chart. Null if not added.
 	 */
@@ -113,14 +113,14 @@ class GoogleChartData
 	{
 		return $this->values !== null && ! empty($this->values);
 	}
-	
+
 	/**
 	 * @since 0.5
 	 */
 	public function computeChd($encoding = GoogleChart::TEXT, $scale = null)
 	{
-		// if scale is null, it means that there is not "global" scale for the chart
-		// hence we need to determine the scale for this data only
+		// If scale is null, it means that there is not "global" scale for the chart
+		// Hence we need to determine the scale for this data only
 		if ( $scale === null ) {
 			$scale = $this->getScale();
 		}
@@ -136,8 +136,8 @@ class GoogleChartData
 				throw new InvalidArgumentException('Invalid encoding format');
 		}
 	}
-	
-	
+
+
 /**
  * @name Pie Chart Labels @c chl
  */
@@ -167,7 +167,7 @@ class GoogleChartData
 		$this->labels = $labels;
 		return $this;
 	}
-	
+
 	/**
 	 * Return labels set by setLabels()
 	 * @return array();
@@ -288,7 +288,7 @@ class GoogleChartData
 
 		return $this->scale;
 	}
-	
+
 	/**
 	 * @since 0.5
 	 */
@@ -361,7 +361,7 @@ class GoogleChartData
 	{
 		return $this->color;
 	}
-	
+
 	/**
 	 * Compute the @c cho parameter.
 	 * @internal
@@ -482,7 +482,7 @@ class GoogleChartData
 		$this->thickness = $thickness;
 		return $this;
 	}
-	
+
 	/**
 	 * @since 0.5
 	 */
@@ -502,7 +502,7 @@ class GoogleChartData
 		$this->space_length = $space_length;
 		return $this;
 	}
-	
+
 	/**
 	 * @internal
 	 * @since 0.5
@@ -518,7 +518,7 @@ class GoogleChartData
 		}
 		return $str;
 	}
-	
+
 	/**
 	 * @internal
 	 * @since 0.5
@@ -540,9 +540,9 @@ class GoogleChartData
 				$v = '_';
 			}
 			else {
-				// we can't rely on PHP's default display for float values, as
-				// float are actually displayed differently depending on the
-				// current locale.
+				// We can't rely on PHP's default display for float values, as
+				// Float are actually displayed differently depending on the
+				// Current locale.
 				$v = number_format($v, 2, '.', '');
 			}
 		}
@@ -557,7 +557,7 @@ class GoogleChartData
 	{
 		if ( $min === null ) {
 			$min = min($values);
-			// by default, we only want a min if there is negative values
+			// By default, we only want a min if there is negative values
 			if ( $min > 0 ) {
 				$min = 0;
 			}
@@ -569,13 +569,13 @@ class GoogleChartData
 
 		$map = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 		$str = '';
-		
+
 		foreach ( $values as $v ) {
 			if ( $v === null ) {
 				$str .= '_';
 				continue;
 			}
-			
+
 			$n = round(61 * (($v - $min) / $max));
 			if ( $n > 61 ) {
 				$str .= '9';
@@ -598,7 +598,7 @@ class GoogleChartData
 	{
 		if ( $min === null ) {
 			$min = min($values);
-			// by default, we only want a min if there is negative values
+			// By default, we only want a min if there is negative values
 			if ( $min > 0 ) {
 				$min = 0;
 			}
@@ -637,19 +637,19 @@ class GoogleChartData
 
 	/**
 	* linear regression function
-	* 
+	*
 	* @param $data array Points to calculate
 	* @returns array() m=>slope, b=>intercept
 	*/
 	static public function calculateLinearRegression($data)
 	{
-		// calculate number points
+		// Calculate number points
 		$n = count($data);
 
 		$x = array_keys($data);
 		$y = array_values($data);
 
-		// calculate sums
+		// Calculate sums
 		$x_sum = array_sum($x);
 		$y_sum = array_sum($y);
 
@@ -663,13 +663,13 @@ class GoogleChartData
 
 		}
 
-		// calculate slope
+		// Calculate slope
 		$m = (($n * $xy_sum) - ($x_sum * $y_sum)) / (($n * $xx_sum) - ($x_sum * $x_sum));
 
-		// calculate intercept
+		// Calculate intercept
 		$b = ($y_sum - ($m * $x_sum)) / $n;
 
-		// return result
+		// Return result
 		return array($m, $b);
 	}
 

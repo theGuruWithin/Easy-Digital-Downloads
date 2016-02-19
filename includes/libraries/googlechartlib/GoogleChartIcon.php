@@ -32,10 +32,10 @@ abstract class GoogleChartIcon extends GoogleChartApi
 	protected function computeQuery()
 	{
 		$q = array();
-		
+
 		$q['chld'] = $this->computeChld();
 		$q['chst'] = $this->computeChst();
-		
+
 		$q = array_merge($q, $this->parameters);
 
 		return $q;
@@ -52,7 +52,7 @@ abstract class GoogleChartIcon extends GoogleChartApi
 		$this->data = $data;
 		return $this;
 	}
-	
+
 	public function getData()
 	{
 		return $this->data;
@@ -65,14 +65,14 @@ abstract class GoogleChartIcon extends GoogleChartApi
 	{
 		$str = 'y;';
 
-		// remove the "d_" for "s" parameter
+		// Remove the "d_" for "s" parameter
 		$tmp = $this->computeChst();
 		if ( $tmp[0] == 'd' && $tmp[1] == '_' )
 			$tmp = substr($tmp,2);
 		$str .= 's='.$tmp;
 
 
-		// escape the "d" parameter
+		// Escape the "d" parameter
 		$str .= ';d='.$this->computeChld(',',',','@');
 
 		$str .= ';ds='.$index;

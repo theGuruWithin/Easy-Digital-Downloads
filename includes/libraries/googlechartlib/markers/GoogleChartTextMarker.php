@@ -10,7 +10,7 @@
  * For the full copyright and license information, please view the LICENSE file.
  */
 
-include_once dirname(__FILE__).'/../GoogleChartMarker.php';
+require_once dirname(__FILE__).'/../GoogleChartMarker.php';
 
 /**
  * A Text marker.
@@ -66,7 +66,7 @@ class GoogleChartTextMarker extends GoogleChartMarker
 	 * - GoogleChartTextMarker::TEXT
 	 * - GoogleChartTextMarker::ANNOTATION
 	 * - GoogleChartTextMarker::VALUE
-	 * 
+	 *
 	 * @param $text (string)
 	 * For FLAG, TEXT and ANNOTATION markers, specify the text to be displayed.
 	 * Ignored for VALUE marker.
@@ -195,9 +195,9 @@ class GoogleChartTextMarker extends GoogleChartMarker
 	public function getPlacement($bar_chart = false)
 	{
 		$str = '';
-		
+
 		$str .= $this->placement['horizontal_placement'].$this->placement['vertical_placement'];
-		
+
 		if ( $bar_chart ) {
 			$str .= $this->placement['bar_relative_placement'];
 		}
@@ -231,25 +231,25 @@ class GoogleChartTextMarker extends GoogleChartMarker
 				throw new LogicException('Text marker requires one data serie or requires to have a fixed position.');
 			}
 
-			// fixed position marker (x:y format)
+			// Fixed position marker (x:y format)
 			$str = '@';
 			$points = $this->position['x'].':'.$this->position['y'];
 		}
 		else {
 			$str = '';
-			// default = all (-1 format)
+			// Default = all (-1 format)
 			if ( $this->points === null ) {
 				$points = '-1';
 			}
-			// only one point (n.d format)
+			// Only one point (n.d format)
 			elseif ( ! is_array($this->points) ) {
 				$points = number_format($this->points,1);
 			}
-			// step only (-n format)
+			// Step only (-n format)
 			elseif ( $this->points['start'] === null && $this->points['end'] === null ) {
 				$points = '-'.$this->points['step'];
 			}
-			// serie (start:end:n)
+			// Serie (start:end:n)
 			else {
 				$points = $this->points['start'].':'.$this->points['end'].':'.$this->points['step'];
 			}
@@ -257,7 +257,7 @@ class GoogleChartTextMarker extends GoogleChartMarker
 
 		$str .= $this->marker_type;
 		if ( $this->marker_type === self::VALUE ) {
-		
+
 		}
 		else {
 			$str .= str_replace(',','\,',$this->text);
@@ -270,7 +270,7 @@ class GoogleChartTextMarker extends GoogleChartMarker
 			$points,
 			$this->size
 		);
-		
+
 		if ( $this->z_order !== null ) {
 			$str .= ','.$this->z_order;
 		}
@@ -279,7 +279,7 @@ class GoogleChartTextMarker extends GoogleChartMarker
 			$tmp = $this->getPlacement($chart_type !== null && $chart_type[0] === 'b');
 			if ( $tmp ) {
 				if ( $this->z_order === null ) {
-					$str .= ','; // add an empty z-order
+					$str .= ','; // Add an empty z-order
 				}
 
 				$str .= ','.$tmp;
